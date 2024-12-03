@@ -31,7 +31,11 @@ function App() {
   return (
     <div className="app">
       <div className="login-container">
-        <h1 className="app-logo">Instagram</h1>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+          alt="Instagram Logo"
+          className="instagram-logo"
+        />
         <form onSubmit={handleSubmit} className="login-form">
           <input
             type="text"

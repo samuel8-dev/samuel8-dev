@@ -82,6 +82,10 @@ body {
   font-size: 12px;
   color: #8e8e8e;
 }
+.instagram-logo {
+  width: 175px;
+  margin-bottom: 20px;
+}
 
 .facebook-login {
   background-color: transparent;
