@@ -1,95 +1,105 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
+  background-color: #fafafa;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
 }
 
-.App {
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   width: 100%;
-  max-width: 375px;
-  background: #fff;
-  border: 1px solid #dbdbdb;
-  padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-
-.logo {
-  display: block;
-  margin: 0 auto 20px;
-  max-width: 200px;
 }
 
 .login-container {
+  width: 350px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+.app-logo {
+  font-family: "Helvetica", sans-serif;
+  font-size: 36px;
+  color: #262626;
+  margin-bottom: 20px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
-.input-field {
+.form-input {
   width: 100%;
   padding: 10px;
-  font-size: 14px;
+  margin: 8px 0;
   border: 1px solid #dbdbdb;
   border-radius: 4px;
+  font-size: 14px;
 }
 
 .login-button {
   background-color: #0095f6;
-  color: #fff;
-  padding: 10px;
-  font-size: 16px;
+  color: white;
   border: none;
+  padding: 10px;
+  font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .login-button:hover {
-  background-color: #007bb5;
+  background-color: #007ed9;
 }
 
-.divider {
+.separator {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  text-align: center;
   margin: 20px 0;
 }
 
-.divider hr {
+.separator::before,
+.separator::after {
+  content: "";
   flex: 1;
-  border: none;
-  border-top: 1px solid #dbdbdb;
+  height: 1px;
+  background: #dbdbdb;
 }
 
-.divider span {
+.separator span {
+  padding: 0 10px;
   font-size: 12px;
   color: #8e8e8e;
 }
 
 .facebook-login {
-  background: none;
+  background-color: transparent;
   color: #385185;
-  font-size: 14px;
-  font-weight: bold;
   border: none;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
+}
+
+.facebook-login:hover {
+  text-decoration: underline;
 }
 
 .forgot-password {
   font-size: 12px;
   color: #00376b;
-  text-decoration: none;
-  display: block;
+  cursor: pointer;
   margin-top: 10px;
 }
 
