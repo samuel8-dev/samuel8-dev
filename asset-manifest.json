@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/loveapp/static/css/main.a5a8b40a.css",
-    "main.js": "/loveapp/static/js/main.79bf9e20.js",
-    "static/js/453.3b2c3845.chunk.js": "/loveapp/static/js/453.3b2c3845.chunk.js",
-    "index.html": "/loveapp/index.html",
-    "main.a5a8b40a.css.map": "/loveapp/static/css/main.a5a8b40a.css.map",
-    "main.79bf9e20.js.map": "/loveapp/static/js/main.79bf9e20.js.map",
-    "453.3b2c3845.chunk.js.map": "/loveapp/static/js/453.3b2c3845.chunk.js.map"
+    "main.css": "/samuel8-dev/static/css/main.a5a8b40a.css",
+    "main.js": "/samuel8-dev/static/js/main.bbd252dd.js",
+    "static/js/453.3b2c3845.chunk.js": "/samuel8-dev/static/js/453.3b2c3845.chunk.js",
+    "index.html": "/samuel8-dev/index.html",
+    "main.a5a8b40a.css.map": "/samuel8-dev/static/css/main.a5a8b40a.css.map",
+    "main.bbd252dd.js.map": "/samuel8-dev/static/js/main.bbd252dd.js.map",
+    "453.3b2c3845.chunk.js.map": "/samuel8-dev/static/js/453.3b2c3845.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a5a8b40a.css",
-    "static/js/main.79bf9e20.js"
+    "static/js/main.bbd252dd.js"
   ]
 }
