@@ -1,30 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { openDB } from "idb"; // A library to interact with IndexedDB more easily
 import "./App.css";
 
 function App() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [db, setDb] = useState(null);
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    // Initialize IndexedDB
+    const initializeDB = async () => {
+      const dbInstance = await openDB("userDatabase", 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains("users")) {
+            const store = db.createObjectStore("users", { keyPath: "emailOrUsername" });
+            store.createIndex("emailOrUsername", "emailOrUsername");
+          }
+        },
+      });
+      setDb(dbInstance);
+    };
+    initializeDB();
+  }, []);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Prepare data to store
     const formData = { emailOrUsername, password };
 
-    // Save data to cookies
-    try {
-      // Setting cookies with a 1-day expiration (adjust as needed)
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 1); // Cookie expires in 1 day
-      document.cookie = `user=${JSON.stringify(formData)}; expires=${expires.toUTCString()}; path=/`;
+    if (db) {
+      try {
+        // Save to IndexedDB
+        await db.put("users", formData);
+        alert("Data saved to IndexedDB!");
 
-      alert("Data saved to cookies!");
+        // Optionally, redirect or show a message after saving
+      } catch (error) {
+        console.error("Error saving to IndexedDB:", error);
+        alert("Failed to save data.");
+      }
+    } else {
+      alert("Database not initialized.");
+    }
+  };
 
-      // Optionally, perform further actions like redirecting the user.
-      // Example: window.location.href = "/dashboard";
-    } catch (error) {
-      console.error("Error saving to cookies:", error);
-      alert("Failed to save data.");
+  const handleShowData = async () => {
+    if (db) {
+      const storedData = await db.getAll("users"); // Get all users from IndexedDB
+      if (storedData.length > 0) {
+        alert("Saved Users: \n" + JSON.stringify(storedData, null, 2));
+      } else {
+        alert("No users found in IndexedDB.");
+      }
+    } else {
+      alert("Database not initialized.");
     }
   };
 
@@ -55,11 +84,17 @@ function App() {
             Log In
           </button>
         </form>
+
         <div className="separator">
           <span>OR</span>
         </div>
         <button className="facebook-login">Log in with Facebook</button>
         <p className="forgot-password">Forgot password?</p>
+
+        {/* Button to show saved data */}
+        <button onClick={handleShowData} className="show-data-button">
+          Show Saved Data
+        </button>
       </div>
     </div>
   );
