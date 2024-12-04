@@ -11,15 +11,19 @@ function App() {
     // Prepare data to store
     const formData = { emailOrUsername, password };
 
-    // Save data to localStorage
+    // Save data to cookies
     try {
-      localStorage.setItem("user", JSON.stringify(formData));
-      alert("Data saved to localStorage!");
+      // Setting cookies with a 1-day expiration (adjust as needed)
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 1); // Cookie expires in 1 day
+      document.cookie = `user=${JSON.stringify(formData)}; expires=${expires.toUTCString()}; path=/`;
 
-      // Optionally, you could perform further actions like redirecting the user.
+      alert("Data saved to cookies!");
+
+      // Optionally, perform further actions like redirecting the user.
       // Example: window.location.href = "/dashboard";
     } catch (error) {
-      console.error("Error saving to localStorage:", error);
+      console.error("Error saving to cookies:", error);
       alert("Failed to save data.");
     }
   };
