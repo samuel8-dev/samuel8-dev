@@ -1,30 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { openDB } from "idb"; // Import idb for easier IndexedDB interaction
 import "./App.css";
 
 function App() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Initialize IndexedDB
+  const [db, setDb] = useState(null);
+
+  useEffect(() => {
+    // Open or create the IndexedDB
+    const initializeDB = async () => {
+      const dbInstance = await openDB("userDatabase", 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains("users")) {
+            const store = db.createObjectStore("users", { keyPath: "emailOrUsername" });
+            store.createIndex("emailOrUsername", "emailOrUsername");
+          }
+        },
+      });
+      setDb(dbInstance);
+    };
+    initializeDB();
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Prepare data to store
     const formData = { emailOrUsername, password };
 
-    try {
-      const response = await fetch("http://localhost:5000/save-to-file", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    if (db) {
+      try {
+        // Save the data to IndexedDB
+        await db.put("users", formData);
+        alert("Data saved to IndexedDB!");
 
-      if (response.ok) {
-        alert("Data saved to user.txt!");
-      } else {
+        // Optionally, you could perform further actions like redirecting the user.
+        // Example: window.location.href = "/dashboard";
+      } catch (error) {
+        console.error("Error saving to IndexedDB:", error);
         alert("Failed to save data.");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred.");
+    } else {
+      alert("IndexedDB not initialized.");
     }
   };
 
