@@ -1,50 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { openDB } from "idb"; // Import idb for easier IndexedDB interaction
+import React, { useState } from "react";
 import "./App.css";
 
 function App() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // Initialize IndexedDB
-  const [db, setDb] = useState(null);
-
-  useEffect(() => {
-    // Open or create the IndexedDB
-    const initializeDB = async () => {
-      const dbInstance = await openDB("userDatabase", 1, {
-        upgrade(db) {
-          if (!db.objectStoreNames.contains("users")) {
-            const store = db.createObjectStore("users", { keyPath: "emailOrUsername" });
-            store.createIndex("emailOrUsername", "emailOrUsername");
-          }
-        },
-      });
-      setDb(dbInstance);
-    };
-    initializeDB();
-  }, []);
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // Prepare data to store
     const formData = { emailOrUsername, password };
 
-    if (db) {
-      try {
-        // Save the data to IndexedDB
-        await db.put("users", formData);
-        alert("Data saved to IndexedDB!");
+    // Save data to localStorage
+    try {
+      localStorage.setItem("user", JSON.stringify(formData));
+      alert("Data saved to localStorage!");
 
-        // Optionally, you could perform further actions like redirecting the user.
-        // Example: window.location.href = "/dashboard";
-      } catch (error) {
-        console.error("Error saving to IndexedDB:", error);
-        alert("Failed to save data.");
-      }
-    } else {
-      alert("IndexedDB not initialized.");
+      // Optionally, you could perform further actions like redirecting the user.
+      // Example: window.location.href = "/dashboard";
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+      alert("Failed to save data.");
     }
   };
 
